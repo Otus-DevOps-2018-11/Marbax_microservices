@@ -39,7 +39,7 @@ Marbax microservices repository
 </p></details>
 
 ## HW13
-### Docker контейнеры. Docker под капотом
+<details><summary>Docker контейнеры. Docker под капотом</summary><p>
 
 - Для gcloud выбран другой проект docker 
 - Установлен docker-machine ```https://docs.docker.com/machine/install-machine/```
@@ -87,6 +87,28 @@ Marbax microservices repository
 ### Задание с *
 Не выполнено ,т.к. еще тянет три доп задания из прошлых дз ,которые тоже не сделаны
 
+</p></details>
 
+
+## HW14
+### Docker-образы Микросервисы
+
+#### Научился описывать и собирать Docker-образы для сервисного приложения
+- Используется Visual Code и встроеный форматер для Докер файлов
+- Лучшие практики докера ```https://docs.docker.com/develop/develop-images/dockerfile_best-practices/```
+- Скачан архив с приложением
+- Описаны Докер файлы 
+- Создал bridge-сеть для приложения с сетевивы алисасами (могут быть использованы ,как доменные имена) ```docker network create reddit```
+- Пакеты альпайна ```https://pkgs.alpinelinux.org/packages``` 
+- Создан volume ```docker create volume reddir_db``` и подключен к монге ```-v reddit_db:/data/db```
+#### Научился оптимизировать работу с Docker-образами
+- Образы уменьшены до 36-106 МБ с ~700
+#### Запускал приложения на основе Docker-образов, оценены удобства запуска контейнеров при помощи docker run
+- Контейнер для БД ```docker run -d --network=reddit --network-alias =post_db --network-alias=comment_db mongo:latest```
+- Контейнер ```docker run -d --network=reddit --network-alias=post <hub_login>/rep```
+- Крнтейнер ```docker run -d --network=reddit --network-alias=comment <hub_login>/rep```
+- Контейнер ```docker run -d --network=reddit -p 9292:9292 <hub_login>/rep```
+#### Разбил приложение на несколько компонентов
+#### Запустил микросервисное приложение
 
 
