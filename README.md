@@ -91,7 +91,8 @@ Marbax microservices repository
 
 
 ## HW14
-### Docker-образы Микросервисы
+<details><summary> Docker-образы Микросервисы</summary><p>
+
 
 #### Научился описывать и собирать Docker-образы для сервисного приложения
 - Используется Visual Code и встроеный форматер для Докер файлов
@@ -111,4 +112,41 @@ Marbax microservices repository
 #### Разбил приложение на несколько компонентов
 #### Запустил микросервисное приложение
 
+</p></details>
+
+## HW15
+### Сетевое взаимодействие Docker контейнеров.
+
+#### Разобрался с работой сети в Docker
+#### none 
+- Контейнер без сетевого доступа наружу ```docker run -ti --rm --network none joffotron/docker-net-tools -c ifconfig```. joffotron/docker-net-tools контейнер с сетевыми тулзами. --network none запуск без внешней сети
+- При многократном запуске контенейры не будут конфликтовать ,т.к. у каждого свой ИП неймспейс 
+#### host 
+- Контейнер в сетевом пространстве хоста ```docker run -ti --rm --network host joffotron/docker-net-tools -c ifconfig```  , вывод такой же как и в ```docker-machine ssh docker-host ifconfig``` 
+- При многократном запуске ```docker run --network host -d nginx``` ,спустя несколько секунд старый контейнер будет остановлен , т.к. они используют один ИП неймспейс
+#### bridge
+- ```docker network create reddit --driver bridge``` создаем свой бридж и подымаем контейнеры с сервисами в нем , т.к. сервисы ссылаются друг на друга по днс именам ,прописаным в Докерфалах ,то в новой инсталяции нужно добавить алиасы
+ - ```docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest```
+ - ```docker run -d --network=reddit --network-alias=post <your-login>/post:1.0```
+ - ```docker run -d --network=reddit --network-alias=comment  <your-login>/comment:1.0```
+ - ```docker run -d --network=reddit -p 9292:9292 <your-login>/ui:1.0```
+```--name <name> (можнозадатьтолько 1 имя) --network-alias <alias-name> (можнозадатьмножествоалиасов)```
+#### double bridge
+- Создал две подсети ```docker network create back_net --subnet=10.0.2.0/24``` и ```docker network create front_net --subnet=10.0.1.0/24```
+- ```docker run -d --network=front_net -p 9292:9292 --name ui  <your-login>/ui:1.0```
+- ```docker run -d --network=back_net --name comment  <your-login>/comment:1.0```
+- ```docker run -d --network=back_net --name post  <your-login>/post:1.0```
+- ```docker run -d --network=back_net --name mongo_db --network-alias=post_db --network-alias=comment_db mongo:latest```
+- При инициализации контейнера ,докер может подключить к нему только одну сеть ,```docker network connect <network> <container>``` подключение доп сетей.
+- ```docker network connect front_net post``` и ```docker network connect front_net comment```
+
+### Docker-compose 
+
+#### Установить docker-compose на локальную машину
+- Установлен из apt
+- Для корректной работы ямля нужно добавить в имя пользователя в переменные окружения
+#### Собрать образы приложения reddit с помощью docker-compose
+- В директории с docker-compose файлом выполнить ```sudo docker-compose up -d``` для поднятия описаной инфраструктуры , если есть переменные окружения ,они будут искаться по дэфолту в ```.env``` файле
+#### Запустить приложение reddit с помощью docker-compose
+- Имя проекта генерится от расположения compose.yml можно поменять с помощью переменной окружения COMPOSE_PROJECT_NAME
 
