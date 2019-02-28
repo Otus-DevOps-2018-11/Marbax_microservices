@@ -3,4 +3,4 @@ run_docker.sh
 stop_destr_docker.sh
 .docker_inst.sh
 src/.env
-src/docker-compose.override.yml
+src/override.yml
