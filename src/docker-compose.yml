@@ -19,7 +19,7 @@ services:
       - front_net
   post:
     build: ./post-py
-    image: ${USERNAME}/post:${POST_VERS}
+    image: ${USERNAME}/post:${POST_VER}
     networks:
       back_net:
        aliases:
