@@ -2,31 +2,51 @@
 version: '3.3'
 services:
   post_db:
-    image: mongo:3.2
+    image: mongo:${MONGO_VER}
     volumes:
       - post_db:/data/db
     networks:
-      - reddit
+      back_net:
+       aliases:
+       - post_db
+       - comment_db
   ui:
     build: ./ui
-    image: ${USERNAME}/ui:1.0
+    image: ${USERNAME}/ui:${UI_VER}
     ports:
-      - 9292:9292/tcp
+      - ${HOST_PORT}:${APP_PORT}/tcp
     networks:
-      - reddit
+      - front_net
   post:
     build: ./post-py
-    image: ${USERNAME}/post:1.0
+    image: ${USERNAME}/post:${POST_VER}
     networks:
-      - reddit
+      back_net:
+       aliases:
+       - comment
+      front_net:
+       aliases:
+       - comment
   comment:
     build: ./comment
-    image: ${USERNAME}/comment:1.0
+    image: ${USERNAME}/comment:${COMMENT_VER}
     networks:
-      - reddit
-
+      back_net:
+       aliases:
+       - post
+      front_net:
+       aliases:
+       - post
 volumes:
   post_db:
-
 networks:
-  reddit:
+  back_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.69.96.0/24
+  front_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.96.69.0/24
