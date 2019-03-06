@@ -2,3 +2,5 @@ build_docker.sh
 run_docker.sh
 stop_destr_docker.sh
 .docker_inst.sh
+src/.env
+src/override.yml
