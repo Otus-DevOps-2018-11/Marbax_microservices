@@ -4,3 +4,6 @@ stop_destr_docker.sh
 .docker_inst.sh
 src/.env
 src/override.yml
+terraform/
+playbooks/
+instance_for_docker.sh
