@@ -188,6 +188,7 @@ Runner registered successfully. Feel free to start it, but if it's running alrea
 </p></details>
 
 #### Подготовить репозиторий с кодом приложения
+- Добавлено реддит приложение ```git clone https://github.com/express42/reddit.git && rm -rf ./reddit/.git``` и закомичено
 #### Описать для приложения этапы пайплайна
 #### Определить окружения
 
