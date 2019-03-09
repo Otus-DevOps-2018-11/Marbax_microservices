@@ -189,6 +189,8 @@ Runner registered successfully. Feel free to start it, but if it's running alrea
 
 #### Подготовить репозиторий с кодом приложения
 - Добавлено реддит приложение ```git clone https://github.com/express42/reddit.git && rm -rf ./reddit/.git``` и закомичено
+- Дописаны тесты для пайплайна , добавлены два окружения ,которые включаются только с тегами ```git tag 1.0.0``` , ```git push gitlab gitlab-ci-1 --tags``` и по мануальной кнопке 
+
 #### Описать для приложения этапы пайплайна
 #### Определить окружения
 
