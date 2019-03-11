@@ -115,7 +115,7 @@ Marbax microservices repository
 </p></details>
 
 ## HW15
-### Сетевое взаимодействие Docker контейнеров.
+<details><summary> Сетевое взаимодействие Docker контейнеров.</summary><p>
 
 #### Разобрался с работой сети в Docker
 #### none 
@@ -149,4 +149,48 @@ Marbax microservices repository
 - В директории с docker-compose файлом выполнить ```sudo docker-compose up -d``` для поднятия описаной инфраструктуры , если есть переменные окружения ,они будут искаться по дэфолту в ```.env``` файле
 #### Запустить приложение reddit с помощью docker-compose
 - Имя проекта генерится от расположения compose.yml можно поменять с помощью переменной окружения COMPOSE_PROJECT_NAME
+
+</p></details>
+
+
+
+### HW 16 Устройство Gitlab CI. Построение процесса непрерывной поставки
+#### Подготовить инсталляцию Gitlab CI
+- С помощью тераформа поднят инстанс, установлен докер и скинут кофиг компоса для гитлаба
+- Создана группа и проект
+<details><summary>Добавлен раннер из консоли хоста гитлаба</summary><p>
+
+docker run -d --name gitlab-runner --restart always -v /srv/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner:latest
+</p></details>
+
+- Потом раннер зарегестрирован ```docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false```
+
+<details><summary>Вывод</summary><p>
+
+Runtime platform                                    arch=amd64 os=linux pid=12 revision=4745a6f3 version=11.8.0
+Running in system-mode.                            
+                              
+Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com/):
+http://35.198.143.87
+Please enter the gitlab-ci token for this runner:
+-YsdSsh14vVyFLkCFLe3
+Please enter the gitlab-ci description for this runner:
+[9c921c64a898]: my-runner
+Please enter the gitlab-ci tags for this runner (comma separated):
+linux,xenial,ubuntu,docker
+Registering runner... succeeded                     runner=-YsdSsh1
+Please enter the executor: docker+machine, kubernetes, docker, shell, ssh, virtualbox, docker-ssh, parallels, docker-ssh+machine:
+docker
+Please enter the default Docker image (e.g. ruby:2.1):
+alpine:latest
+Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+
+</p></details>
+
+#### Подготовить репозиторий с кодом приложения
+- Добавлено реддит приложение ```git clone https://github.com/express42/reddit.git && rm -rf ./reddit/.git``` и закомичено
+#### Описать для приложения этапы пайплайна
+- Дописаны тесты для пайплайна
+#### Определить окружения
+- Добавлены два окружения ,которые включаются только с тегами ```git tag 1.0.0``` , ```git push gitlab gitlab-ci-1 --tags``` и по мануальной кнопке 
 
