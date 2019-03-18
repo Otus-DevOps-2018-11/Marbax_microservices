@@ -153,8 +153,8 @@ Marbax microservices repository
 </p></details>
 
 
+<details><summary>HW 16 Устройство Gitlab CI. Построение процесса непрерывной поставки</summary><p>
 
-### HW 16 Устройство Gitlab CI. Построение процесса непрерывной поставки
 #### Подготовить инсталляцию Gitlab CI
 - С помощью тераформа поднят инстанс, установлен докер и скинут кофиг компоса для гитлаба
 - Создана группа и проект
@@ -193,4 +193,56 @@ Runner registered successfully. Feel free to start it, but if it's running alrea
 - Дописаны тесты для пайплайна
 #### Определить окружения
 - Добавлены два окружения ,которые включаются только с тегами ```git tag 1.0.0``` , ```git push gitlab gitlab-ci-1 --tags``` и по мануальной кнопке 
+
+</p></details>
+
+### HW17 Введение в мониторинг. Системы мониторинга.
+
+#### Prometheus: запуск, конфигурация, знакомствосWeb UI 
+- Создано правило фаервола для Prometheus и Puma: ```gcloud compute firewall-rules create prometheus-default --allow tcp:9090``` и ```gcloud compute firewall-rules create puma-default --allow tcp:9292 ```
+ 
+<details><summary> Создадан Docker хост в GCE и настроено локальное окружение на работу с ним</summary><p>
+
+```
+
+gcloud compute firewall-rules create prometheus-default --allow tcp:9090
+
+gcloud compute firewall-rules create puma-default --allow tcp:9292
+
+export GOOGLE_PROJECT=_proj_
+
+docker-machine create --driver google \
+    --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts \
+    --google-machine-type n1-standard-1 \
+    --google-zone europe-west1-b \
+    docker-host
+
+eval $(docker-machine env docker-host)
+
+docker run --rm -p 9090:9090 -d --name prometheus  prom/prometheus
+
+docker-machine ip docker-host
+
+docker stop prometheus
+
+```
+
+</p></details>
+
+- Установлен готовый образ из докер хаба ```docker run --rm -p 9090:9090 -d --name prometheus  prom/prometheus:v2.1.0```
+- Для удобства структура директорий изменена ,изменения сверены с содержимым гитигнора
+- Описан докер файл для прометеуса ,который копирует .yml конфиг в контейнер 
+- Образы сервисов собраны по скриптам для хелсчеков
+- compose.yml отредактирован под новые требования ,добавлен подьем прометеуса со своим волюмом и ограничением хранения данных в один день и добавлен во внутреннюю сеть. Так же ,для сервисы определены образы ,а не билды
+#### Мониторинг состояния микросервисов
+- Проведены эксперементы с реакцией прометеуса, при отключении одного из сервисов 
+#### Сбор метрик хоста с использованием экспортера
+- В compose.yml добавлено описание node-exporter для сбора метрик с хоста , так же добавлен во внутреннюю сеть
+- В конфиг прометеуса добавлен джоб для node-exporter , потом прометеус пересобран с новыми изменениями ,перезапущен compose.yml 
+- Проверено как прометеус отображает график нагрузки цп хоста 
+- Образы запушены на докер хаб
+- VM docker-host удален :с 
+Ссылка на докер хаб с образами - https://hub.docker.com/u/marbax
+#### Заданиясо *
+- Не сделаны ,нужно догонять
 

@@ -7,3 +7,4 @@ src/override.yml
 terraform/
 playbooks/
 instance_for_docker.sh
+docker/.env
