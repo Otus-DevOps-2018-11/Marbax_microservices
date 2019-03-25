@@ -12,6 +12,8 @@ services:
        aliases:
        - post_db
        - comment_db
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
   ui:
     image: ${USERNAME}/ui:${UI_VER}
@@ -19,6 +21,13 @@ services:
       - ${HOST_PORT}:${APP_PORT}/tcp
     networks:
       - front_net
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
   post:
     image: ${USERNAME}/post:${POST_VER}
@@ -29,6 +38,13 @@ services:
       front_net:
        aliases:
        - comment
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
   comment:
     image: ${USERNAME}/comment:${COMMENT_VER}
@@ -39,6 +55,8 @@ services:
       front_net:
        aliases:
        - post
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
 
 volumes:
   post_db:
