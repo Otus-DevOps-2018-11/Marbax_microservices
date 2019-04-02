@@ -8,3 +8,4 @@ terraform/
 playbooks/
 instance_for_docker.sh
 docker/.env
+/home/marbax/Desktop/Marbax_fot_git/Marbax_microservices/kubernetes/ansible/the_hard_way.yml
