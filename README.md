@@ -276,7 +276,7 @@ docker stop prometheus
 </p></details>
 
 
-### HW19 Логирование и распределенная трассировка
+<details><summary> HW19 Логирование и распределенная трассировка</summary><p>
 
 #### Сбор неструктурированных логов
 - Обновлен код микросервисов и пересобраны контейнеры
@@ -301,3 +301,12 @@ docker stop prometheus
 ```max_resp_time = 3 
         median_time = time.sleep(max_resp_time)
 ```
+</p></details>
+
+
+### HW20  Введение в Kubernetes
+
+#### Разобрать на практике все компоненты Kubernetes, развернуть их вручную используя The Hard Way
+- Развернут Kubernetes по мануалу the hard way 
+#### Ознакомиться с описанием основных примитивов нашего приложения и его дальнейшим запуском в Kubernetes.
+
