@@ -304,9 +304,29 @@ docker stop prometheus
 </p></details>
 
 
-### HW20  Введение в Kubernetes
+<details><summary> HW20  Введение в Kubernetes</summary><p>
 
 #### Разобрать на практике все компоненты Kubernetes, развернуть их вручную используя The Hard Way
 - Развернут Kubernetes по мануалу the hard way 
 #### Ознакомиться с описанием основных примитивов нашего приложения и его дальнейшим запуском в Kubernetes.
 
+</p></details>
+
+
+### HW21 Kubernetes.Запуск кластера и приложения. Модель безопасности.
+
+#### Развернуть локальное окружение для работы с Kubernetes
+- Установлен minikube ```curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.27.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/```
+- Kubectl и VirtualBox уже были установлены
+- ```minikube start``` запущен кластер в виртуалке
+- Описаны компоненты и сервисы приложения в ямль манифестах ,находятся в ./kubernetes/reddir/
+- Создан отдельный неймспейс  (после этого машина странно перегружаться начала ,а миникюб  залипает)
+#### Развернуть Kubernetes в GKE
+- В GKE развернут мини кластер кубера из нод 
+- В фаерволе открыты порты под кубер 3000-3267
+- В GKE ГУИ добавлен дэшборд , ```kubectl proxy``` вход на дэшборд через проксю(выдаваемый адрес неполный ,насколько я понял(http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login))
+#### Запустить reddit в Kubernetes
+- [Ссылка на приложение в GKE](35.204.210.153:32451)
+
+#### Доп задания
+- Поднятие кластера кубера с помощью тераформа и описание в ямле добавление дэшборда не сделано из-за нехватки времени 
