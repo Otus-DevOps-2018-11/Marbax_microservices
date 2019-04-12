@@ -312,8 +312,7 @@ docker stop prometheus
 
 </p></details>
 
-
-### HW21 Kubernetes.Запуск кластера и приложения. Модель безопасности.
+<details><summary> HW21 Kubernetes.Запуск кластера и приложения. Модель безопасности.</summary><p>
 
 #### Развернуть локальное окружение для работы с Kubernetes
 - Установлен minikube ```curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.27.0/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/```
@@ -330,3 +329,37 @@ docker stop prometheus
 
 #### Доп задания
 - Поднятие кластера кубера с помощью тераформа и описание в ямле добавление дэшборда не сделано из-за нехватки времени 
+
+</p></details>
+
+
+### HW22 Kubernetes.Networks ,Storages
+
+#### Ingress Controller
+- Протестирован облачный балансировщик
+#### Ingress
+- Создан Ingress для ui 
+- Убран облачный балансировщик
+- Ingress описан как класический веб 
+#### Secret
+- Сгенерирован самоподписаный сертификат и загружен в кубер 
+#### TLS
+- Отключен http 
+#### LoadBalancer Service
+#### Network Policies
+- Установлен бета функционал gcloud  и включен Network Policies
+- Запрещен доступ со всех направлений к БД,кроме сервиса comment и post
+#### PersistentVolumes
+- Использовано хранилище типа emptyDir, которое очищается при каждом обновлении Пода
+- Создан и добавлен гугл клауд диск ,который сохраняется
+#### PersistentVolumeClaims
+- Создан PersistentVolumeClaim с медленным диском 
+- Для монги создан запрос диска с помощью persistentVolumeClaim
+- Создан PersistentVolumeClaim с ССД диском 
+- Создан запрос для монги на быстрый диск 
+
+
+
+
+
+
